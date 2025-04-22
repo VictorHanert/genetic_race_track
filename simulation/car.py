@@ -16,7 +16,7 @@ class Car(object):
 
     def __init__(self, game_map):
         self.game_map = game_map
-        self.surface = pg.image.load('red_car.png')
+        self.surface = pg.image.load('assets/red_car.png')
         self.surface = pg.transform.scale(
             self.surface, (CAR_WIDTH, CAR_HEIGHT)
         )
@@ -24,7 +24,7 @@ class Car(object):
         self.x_pos = 600
         self.y_pos = 655
         self.angle = 0
-        self.speed = 7
+        self.speed = 6
         self.distance = 0
         self.collided = False
         self.collision_points = []

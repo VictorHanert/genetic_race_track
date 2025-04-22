@@ -36,6 +36,8 @@ else:
 def main():
     """Main method for runing the pygame window"""
 
+    pygame.init()
+    screen = pygame.display.set_mode((SCREEN_HEIGHT, SCREEN_WIDTH))
     car = Car(game_map)
 
     dif_x = 0
