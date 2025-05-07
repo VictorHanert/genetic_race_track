@@ -34,8 +34,6 @@ else:
 
 
 def main():
-    """Main method for runing the pygame window"""
-
     pygame.init()
     screen = pygame.display.set_mode((SCREEN_HEIGHT, SCREEN_WIDTH))
     car = Car(game_map)
@@ -48,7 +46,8 @@ def main():
     running = True
     while running:
         # RGB - Red, Green, Blue
-        # screen.fill((40, 40, 40))
+        screen.fill(255, 255, 255)
+        # Draw the map
         screen.blit(game_map, (0, 0))
 
         for event in pygame.event.get():
@@ -118,7 +117,6 @@ def run_car(genomes, config):
     clock = pygame.time.Clock()
     generation_font = pygame.font.SysFont("Arial", 70)
     font = pygame.font.SysFont("Arial", 30)
-    #map = pygame.image.load('map.png')
 
     # Main loop
     global GENERATION
@@ -134,9 +132,9 @@ def run_car(genomes, config):
             output = nets[index].activate(car.get_data())
             i = output.index(max(output))
             if i == 0:
-                car.angle += 10
+                car.angle += 6
             else:
-                car.angle -= 10
+                car.angle -= 6
 
         # Update car and fitness
         remain_cars = 0
@@ -156,23 +154,15 @@ def run_car(genomes, config):
             if not(car.get_collided()):
                 car.draw(screen)
 
-        text = generation_font.render(
-            "Generation : " + str(GENERATION), True, (0, 0, 0))
-        text_rect = text.get_rect()
-        text_rect.center = (SCREEN_WIDTH + 300, 150)
-        screen.blit(text, text_rect)
+        def render_text(screen, font, text, center):
+            rendered_text = font.render(text, True, (0, 0, 0))
+            text_rect = rendered_text.get_rect()
+            text_rect.center = center
+            screen.blit(rendered_text, text_rect)
 
-        text = font.render("Remain cars : " +
-                           str(remain_cars), True, (0, 0, 0))
-        text_rect = text.get_rect()
-        text_rect.center = (SCREEN_WIDTH + 300, 200)
-        screen.blit(text, text_rect)
-
-        text = font.render("Number of sensors : " +
-                           str(os.getenv("NUM_SENSORES")), True, (0, 0, 0))
-        text_rect = text.get_rect()
-        text_rect.center = (SCREEN_WIDTH + 300, 230)
-        screen.blit(text, text_rect)
+        render_text(screen, generation_font, f"Generation : {GENERATION}", (SCREEN_WIDTH + 300, 30))
+        render_text(screen, font, f"Remain cars : {remain_cars}", (SCREEN_WIDTH + 300, 75))
+        render_text(screen, font, f"Number of sensors : {os.getenv('NUM_SENSORES')}", (SCREEN_WIDTH + 300, 105))
 
         pygame.display.flip()
         clock.tick(0)

@@ -12,7 +12,7 @@ load_dotenv()
 
 
 class Car(object):
-    """Car class for pygame simulation"""
+    """Car class"""
 
     def __init__(self, game_map):
         self.game_map = game_map
@@ -24,7 +24,7 @@ class Car(object):
         self.x_pos = 600
         self.y_pos = 655
         self.angle = 0
-        self.speed = 6
+        self.speed = 8
         self.distance = 0
         self.collided = False
         self.collision_points = []
@@ -34,16 +34,13 @@ class Car(object):
         ]
 
     def draw(self, screen):
-        """Renders the car intro the screen"""
+        """Draws the car"""
         screen.blit(self.rotate_surface, [self.x_pos, self.y_pos])
         self.draw_radar(screen)
 
     def update(self):
-        """Updates the car itself"""
-        #self.x_pos += dif_x
-        #self.y_pos += dif_y
+        """Updates the car position and angle"""
         self.distance += self.speed
-        #self.angle += dif_angle
         self.x_pos += math.cos(math.radians(360-self.angle)) * self.speed
         self.y_pos += math.sin(math.radians(360-self.angle)) * self.speed
         self.center = [int(self.x_pos + 50), int(self.y_pos + 50)]
